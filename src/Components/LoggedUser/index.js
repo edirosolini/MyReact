@@ -23,10 +23,13 @@ const LoggedUser = (props) => {
   } = props;
 
   const getInitials = () => {
-    const firstName = String(businessName).split(" ")[0];
-    const lastName = String(businessName).split(" ")[1];
-
-    return `${firstName?.charAt(0)}${lastName?.charAt(0)}`;
+    if (businessName) {
+      const firstName = String(businessName).split(" ")[0];
+      const lastName = String(businessName).split(" ")[1];
+      return `${firstName?.charAt(0)}${lastName?.charAt(0)}`;
+    } else {
+      return ``;
+    }
   };
 
   return (

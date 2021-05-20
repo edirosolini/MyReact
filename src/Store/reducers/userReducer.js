@@ -1,6 +1,4 @@
 const initialState = {
-  tokenAccess: null,
-  tokenType: null,
   businessName: null,
 };
 
@@ -9,8 +7,6 @@ const reducer = (state = initialState, action) => {
     case "UPDATE_LOGIN":
       return {
         ...state,
-        tokenAccess: action.tokenAccess,
-        tokenType: action.tokenType,
         businessName: action.businessName,
       };
     default:

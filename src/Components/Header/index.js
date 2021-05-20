@@ -14,7 +14,7 @@ const Header = (props) => {
   }, [title]);
 
   return (
-    <HeaderSemantic as="h2" icon textAlign="center">
+    <HeaderSemantic as="h2" icon textAlign="center" block>
       <Image src={logo} />
       {title}
       <HeaderSemantic.Subheader>{subTitle ?? ``}</HeaderSemantic.Subheader>

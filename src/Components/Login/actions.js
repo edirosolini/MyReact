@@ -1,5 +1,6 @@
 import axios from "axios";
-import { NAME, URI_BACKEND } from "../../config/envs";
+import { URI_BACKEND } from "../../config/envs";
+import { setCookie } from "../../utils/cookie";
 
 class Actions {
   instance = axios.create({
@@ -10,30 +11,20 @@ class Actions {
     },
   });
 
-  post = async (updateToast, setFormOpen, setData, paylod) => {
+  post = async (updateToast, updateUser, setFormOpen, paylod) => {
+    console.log("paylod", paylod);
     await this.instance
-      .post(`/api/Users/Authenticate`, paylod)
+      .post(`/api/Authenticate`, paylod)
       .then((x) => {
-        localStorage.setItem(`${NAME}/tokenType`, x.data.tokenType);
-        localStorage.setItem(`${NAME}/tokenAccess`, x.data.tokenAccess);
-        localStorage.setItem(`${NAME}/businessName`, x.data.businessName);
-
-        setData(x.data.tokenType, x.data.tokenAccess, x.data.businessName);
-
-        updateToast("Login success", null, "success");
+        updateUser(x.data.businessName);
+        setCookie("businessName", x.data.businessName, 1);
+        setCookie("tokenType", x.data.tokenType, 1);
+        setCookie("tokenAccess", x.data.tokenAccess, 1);
 
         setFormOpen(false);
       })
       .catch((e) => {
-        setData(null, null, null);
-
-        updateToast(
-          "Login failed",
-          "Wrong username or password. Please retry.",
-          "warning"
-        );
-
-        setFormOpen(true);
+        updateToast("Login failed", e.message, "danger");
       })
       .finally(() => {});
   };

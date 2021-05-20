@@ -1,10 +1,8 @@
 import jwt from "jsonwebtoken";
-import { NAME, SEED } from "../config/envs";
+import { SEED } from "../config/envs";
 
-const VerifyAccessToken = () => {
+const VerifyAccessToken = (tokenAccess) => {
   return new Promise((resolve, reject) => {
-    let tokenAccess = localStorage.getItem(`${NAME}/tokenAccess`);
-
     if (tokenAccess) {
       jwt.verify(
         tokenAccess,
@@ -12,8 +10,6 @@ const VerifyAccessToken = () => {
         { audience: "Audience", issuer: "Issuer" },
         (err, _decoded) => {
           if (err) {
-            console.log("err", err);
-            localStorage.clear();
             reject(err);
           }
           resolve();
